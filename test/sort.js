@@ -32,6 +32,7 @@ test('file does not exist', t => {
 });
 
 test('directory', t => {
+  shell.config.globOptions = { mark: true };
   t.truthy(common.statFollowLinks('test/resources/').isDirectory()); // sanity check
   const result = shell.sort('test/resources/');
   t.truthy(shell.error());

@@ -72,3 +72,57 @@ function skipIfTrue(booleanValue, t, closure) {
 
 exports.skipOnUnix = skipIfTrue.bind(module.exports, process.platform !== 'win32');
 exports.skipOnWin = skipIfTrue.bind(module.exports, process.platform === 'win32');
+
+  /**
+   * @function sortResult
+   * @param {array|string} value An array or string containing file names.
+   * If input is a string, file names are separated by a space or newline.
+   * @returns {array|string} Sorted file names. If input is a string,
+   * files names are joined by a space; otherwise, an array is returned.
+   *
+   * Regarding the use of sort on tests' result.stdout:
+   *
+   * In the latest versions of the glob package for Node.js,
+   * the nosort option has been removed. This was done to
+   * improve performance by maximizing parallelism in the
+   * file system walk.
+   *
+   * Here's how to handle the lack of nosort:
+   *
+   * Accept the default behavior:
+   * If the order of the matched files isn't critical,
+   * you can simply use glob without any special handling.
+   *
+   * Sort the results manually:
+   * If you need to sort the results in a specific way,
+   * you can use the sort method on the array returned by glob:
+   *
+   *  const glob = require('glob');
+   *
+   *  glob('**\/*.js', (err, files) => {
+   *      if (err) {
+   *          console.error(err);
+   *          return;
+   *      }
+   *
+   *      // Sort the files alphabetically
+   *      files.sort();
+   *
+   *      console.log(files);
+   *  });
+   */
+const sortResult = (value) => {
+  const typeOfValue = typeof value;
+  const isString = typeOfValue === 'string';
+
+  const sortArray = (arr) => arr.sort((a, b) => a.localeCompare(b));
+
+  const sortString = (str) => {
+    const fileNames = str.split(/\s/).map((fileName) => fileName.trim());
+    return `${sortArray(fileNames).join(' ').trim()}\n`;
+  };
+
+  return isString ? sortString(value) : sortArray(value);
+};
+
+exports.sortResult = sortResult;

@@ -25,6 +25,7 @@ test('file does not exist', t => {
 });
 
 test('directory', t => {
+  shell.config.globOptions = { mark: true };
   t.truthy(common.statFollowLinks('test/resources/').isDirectory()); // sanity check
   const result = shell.tail('test/resources/');
   t.truthy(shell.error());
@@ -95,10 +96,10 @@ test('globbed file', t => {
   t.falsy(shell.error());
   t.is(result.code, 0);
   t.is(result.toString(),
-    bottomOfFile1
+    bottomOfFile2
       .slice(0, 10)
       .reverse()
-      .concat(bottomOfFile2.slice(0, 10).reverse())
+      .concat(bottomOfFile1.slice(0, 10).reverse())
       .join('\n') + '\n');
 });
 

@@ -4,7 +4,8 @@ import test from 'ava';
 
 import shell from '..';
 import common from '../src/common';
-import utils from './utils/utils';
+
+import utils, { sortResult } from './utils/utils';
 
 //
 // Valids
@@ -62,7 +63,7 @@ test('config.globOptions expands directories by default', t => {
     'test/resources/external',
     'test/resources/head',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
 });
 
 test('config.globOptions respects cwd', t => {
@@ -76,7 +77,7 @@ test('config.globOptions respects cwd', t => {
     'resources/external',
     'resources/head',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
 });
 
 test('config.globOptions respects dot', t => {
@@ -98,7 +99,7 @@ test('config.globOptions respects ignore', t => {
     'test/resources/cat',
     'test/resources/head',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
   // Does not include the result that we chose to ignore
   t.truthy(result.indexOf('test/resources/external') < 0);
 });
@@ -121,7 +122,7 @@ test('config.globOptions respects absolute', t => {
     abs('test/resources/external'),
     abs('test/resources/head'),
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
 });
 
 test('config.globOptions respects nodir', t => {
@@ -132,7 +133,7 @@ test('config.globOptions respects nodir', t => {
     'test/resources/a.txt',
     'test/resources/badlink',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
   // Does not include the directories.
   t.truthy(result.indexOf('test/resources/cat') < 0);
   t.truthy(result.indexOf('test/resources/head') < 0);
@@ -150,7 +151,7 @@ test('config.globOptions respects mark', t => {
     'test/resources/external/',
     'test/resources/head/',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
 });
 
 test('config.globOptions respects nobrace', t => {
@@ -184,7 +185,7 @@ test('config.globOptions respects noglobstar', t => {
     'test/resources/sort/file1',
     'test/resources/uniq/file1',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
 
   // When 'noglobstar' is true, "**" will behave like a regular "*" and matches
   // exactly 1 directory.
@@ -208,7 +209,7 @@ test('config.globOptions respects noext', t => {
     'test/resources/file2.js',
     'test/resources/file2.txt',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
 
   // When 'noext' is true, this only matches regular globs (like "file2.*").
   shell.config.globOptions = { noext: true };
@@ -221,22 +222,22 @@ test('config.globOptions respects noext', t => {
     'test/resources/file2.js',
     'test/resources/file2.txt',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
 });
 
 test('config.globOptions respects nocase', t => {
-  // Default behavior will change depending on macOS, Windows, or Linux. This is
-  // difficult to test in a cross-platform way.
+  // Default behavior will change depending on macOS, Windows,
+  // or Linux. This is difficult to test in a cross-platform way.
 
-  // When 'nocase' is true, we should be able to match files even if we use the
-  // wrong case in the pattern.
+  // When 'nocase' is true, we should be able to match files
+  // even if we use the wrong case in the pattern.
   shell.config.globOptions = { nocase: true };
   let result = common.expand(['test/resources/FILE*.TXT']);
   let expected = [
     'test/resources/file1.txt',
     'test/resources/file2.txt',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
 
   // When 'nocase' is false, using the wrong case will fail to match any files.
   shell.config.globOptions = { nocase: false };
@@ -271,5 +272,5 @@ test('config.globOptions respects matchBase', t => {
     'sort/file1',
     'uniq/file1',
   ];
-  t.deepEqual(result, expected);
+  t.deepEqual(sortResult(result), expected);
 });

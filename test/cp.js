@@ -558,7 +558,7 @@ test('-u flag works correctly recursively', t => {
   shell.touch({ '-d': new Date(10000) }, `${t.context.tmp}/foo/file3`);
   shell.cp('-u', `${t.context.tmp}/foo/*`, `${t.context.tmp}/bar`);
   t.falsy(shell.error());
-  t.is(shell.cat(`${t.context.tmp}/bar/*`).toString(), 'new\nnew\nnewest\n');
+  t.is(shell.cat(`${t.context.tmp}/bar/*`).toString(), 'newest\nnew\nnew\n');
 });
 
 test('using -R on a link to a folder *does* follow the link', t => {

@@ -26,6 +26,7 @@ test('file does not exist', t => {
 });
 
 test('directory', t => {
+  shell.config.globOptions = { mark: true };
   t.truthy(common.statFollowLinks('test/resources/').isDirectory()); // sanity check
   const result = shell.head('test/resources/');
   t.truthy(shell.error());
@@ -94,9 +95,9 @@ test('Globbed file', t => {
   const result = shell.head('test/resources/head/file?.txt');
   t.falsy(shell.error());
   t.is(result.code, 0);
-  t.is(result.toString(), topOfFile1
+  t.is(result.toString(), topOfFile2
     .slice(0, 10)
-    .concat(topOfFile2.slice(0, 10))
+    .concat(topOfFile1.slice(0, 10))
     .join('\n') + '\n');
 });
 

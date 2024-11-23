@@ -4,6 +4,8 @@ import test from 'ava';
 
 import shell from '..';
 
+import { sortResult } from './utils/utils';
+
 // TODO(nfischer): remove this when shell.cmd() is finished. For now, load it
 // like any other plugin.
 require('../src/cmd');
@@ -159,7 +161,8 @@ test('supports globbing by default', t => {
     'test/resources/file1.txt',
     'test/resources/file2.txt',
   ];
-  t.is(result.stdout, `${expectedFiles.join(' ')}\n`);
+
+  t.is(sortResult(result.stdout), `${expectedFiles.join(' ')}\n`);
 });
 
 test('globbing respects config.noglob', t => {

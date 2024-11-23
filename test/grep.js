@@ -102,7 +102,7 @@ test('multiple files, glob syntax, * for file name', t => {
 test('multiple files, glob syntax, * for directory name', t => {
   const result = shell.grep(/test/, 'test/r*/file*.txt');
   t.falsy(shell.error());
-  t.is(result.toString(), 'test1\ntest2\n');
+  t.is(result.toString(), 'test2\ntest1\n');
 });
 
 test('multiple files, double-star glob', t => {

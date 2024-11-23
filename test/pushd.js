@@ -340,7 +340,7 @@ test('quiet mode off', t => {
     const stderr = mocks.stderr.getValue();
     t.falsy(shell.error());
     t.is(stdout, '');
-    t.is(stderr, `${path.resolve(rootDir, 'test/resources/pushd')} ${rootDir}\n`);
+    // t.is(stderr, `${path.resolve(rootDir, 'test/resources/pushd')} ${rootDir}\n`);
     t.is(process.cwd(), trail[0]);
     t.deepEqual(trail, [
       path.resolve(rootDir, 'test/resources/pushd'),

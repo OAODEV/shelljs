@@ -25,6 +25,7 @@ test('file does not exist', t => {
 });
 
 test('directory', t => {
+  shell.config.globOptions = { mark: true };
   t.truthy(common.statFollowLinks('test/resources/').isDirectory()); // sanity check
   const result = shell.uniq('test/resources/');
   t.truthy(shell.error());
@@ -33,6 +34,7 @@ test('directory', t => {
 });
 
 test('output directory', t => {
+  shell.config.globOptions = { mark: true };
   t.truthy(common.statFollowLinks('test/resources/').isDirectory()); // sanity check
   const result = shell.uniq('test/resources/file1.txt', 'test/resources/');
   t.truthy(shell.error());

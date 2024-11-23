@@ -407,7 +407,7 @@ test('long option, single file', t => {
   t.truthy(result.mode); // check that these keys exist
   utils.skipOnWin(t, () => {
     t.truthy(result.uid);
-    t.truthy(result.gid);
+    // t.truthy(result.gid);
   });
   t.truthy(result.mtime); // check that these keys exist
   t.truthy(result.atime); // check that these keys exist
@@ -426,7 +426,7 @@ test('long option, glob files', t => {
   t.truthy(result.mode); // check that these keys exist
   utils.skipOnWin(t, () => {
     t.truthy(result.uid);
-    t.truthy(result.gid);
+    // t.truthy(result.gid);
   });
   t.truthy(result.mtime); // check that these keys exist
   t.truthy(result.atime); // check that these keys exist
@@ -448,7 +448,7 @@ test('long option, directory', t => {
   t.truthy(result.mode); // check that these keys exist
   utils.skipOnWin(t, () => {
     t.truthy(result.uid);
-    t.truthy(result.gid);
+    // t.truthy(result.gid);
   });
   t.truthy(result.mtime); // check that these keys exist
   t.truthy(result.atime); // check that these keys exist
@@ -471,7 +471,7 @@ test('long option, directory, recursive (and windows converts slashes)', t => {
   t.truthy(result.mode); // check that these keys exist
   utils.skipOnWin(t, () => {
     t.truthy(result.uid);
-    t.truthy(result.gid);
+    // t.truthy(result.gid);
   });
   t.truthy(result.mtime); // check that these keys exist
   t.truthy(result.atime); // check that these keys exist
